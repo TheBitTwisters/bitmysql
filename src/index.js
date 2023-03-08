@@ -1,5 +1,5 @@
-import Queries from "./queries";
-import Models from "./models";
+const Queries = require('./queries');
+const Models = require('./models');
 
 const BaseModel = Models.BaseModel;
 

@@ -20,4 +20,4 @@ class CustomQuery extends BaseSelect {
   }
 }
 
-export default CustomQuery;
+module.exports = CustomQuery;

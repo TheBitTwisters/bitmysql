@@ -55,4 +55,4 @@ class SearchQuery extends BaseSelect {
   }
 }
 
-export default SearchQuery;
+module.exports = SearchQuery;

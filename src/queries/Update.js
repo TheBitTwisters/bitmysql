@@ -61,4 +61,4 @@ class Update {
   }
 }
 
-export default Update;
+module.exports = Update;

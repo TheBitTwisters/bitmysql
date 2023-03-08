@@ -29,4 +29,4 @@ const run = async (sql, params) => {
   }
 };
 
-export default run;
+module.exports = run;

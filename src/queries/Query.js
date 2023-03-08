@@ -7,4 +7,4 @@ class Query extends BaseSelect {
   }
 }
 
-export default Query;
+module.exports = Query;

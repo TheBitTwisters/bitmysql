@@ -42,4 +42,4 @@ class Delete {
   }
 }
 
-export default Delete;
+module.exports = Delete;

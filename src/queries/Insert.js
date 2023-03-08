@@ -43,4 +43,4 @@ class Insert {
   }
 }
 
-export default Insert;
+module.exports = Insert;

@@ -1,6 +1,5 @@
 {
   "name": "@thebittwisters/bitmysql",
-  "type": "module",
   "version": "1.0.3",
   "description": "Helper for mysql",
   "main": "src/index.js",

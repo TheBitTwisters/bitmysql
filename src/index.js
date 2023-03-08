@@ -1,6 +1,6 @@
 const Queries = require('./queries');
-const Models = require('./models');
+const BaseModel = require('./models/BaseModel');
 
-module.exports.Models = Models;
-module.exports.BaseModel = Models.BaseModel;
+module.exports.Models = { BaseModel };
+module.exports.BaseModel = BaseModel;
 module.exports.Queries = Queries;

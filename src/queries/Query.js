@@ -1,5 +1,5 @@
-import run from "./run";
-import BaseSelect from "./BaseSelect";
+const run = require('./run');
+const BaseSelect = require('./BaseSelect');
 
 class Query extends BaseSelect {
   async execute() {

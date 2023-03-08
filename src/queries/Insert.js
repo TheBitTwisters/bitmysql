@@ -1,7 +1,7 @@
-import run from "./run";
+const run = require('./run');
 
 class Insert {
-  table = "";
+  table = '';
   columns = [];
   columnValues = [];
   insertId = 0;
@@ -26,15 +26,15 @@ class Insert {
     var columns = [];
     var values = [];
     for (var column of this.columns) {
-      columns.push("`" + column + "`");
-      values.push("?");
+      columns.push('`' + column + '`');
+      values.push('?');
     }
     var sql = `
       INSERT INTO ${this.table}
                   (${columns.join()})
            VALUES (${values.join()})
     `;
-    return sql.replace(/\s+/g, " ").trim();
+    return sql.replace(/\s+/g, ' ').trim();
   }
 
   async execute() {

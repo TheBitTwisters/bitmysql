@@ -1,11 +1,11 @@
-import Query from "./Query";
-import SearchQuery from "./SearchQuery";
-import CustomQuery from "./CustomQuery";
+const Query = require('./Query');
+const SearchQuery = require('./SearchQuery');
+const CustomQuery = require('./CustomQuery');
 
-import Insert from "./Insert";
-import Update from "./Update";
+const Insert = require('./Insert');
+const Update = require('./Update');
 
-import Delete from "./Delete";
+const Delete = require('./Delete');
 
 export default {
   Query,

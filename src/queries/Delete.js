@@ -1,7 +1,7 @@
-import run from "./run";
+const run = require('./run');
 
 class Delete {
-  table = "";
+  table = '';
   whereKeys = [];
   whereValues = [];
   result = false;
@@ -29,11 +29,11 @@ class Delete {
     if (this.whereKeys.length > 0) {
       var ws = [];
       for (var where of this.whereKeys) {
-        ws.push((where += "=?"));
+        ws.push((where += '=?'));
       }
-      sql += "WHERE " + ws.join(" AND ");
+      sql += 'WHERE ' + ws.join(' AND ');
     }
-    return sql.replace(/\s+/g, " ").trim();
+    return sql.replace(/\s+/g, ' ').trim();
   }
 
   async execute() {

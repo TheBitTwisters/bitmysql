@@ -1,7 +1,7 @@
-import run from "./run";
+const run = require('./run');
 
 class Update {
-  table = "";
+  table = '';
   columns = [];
   columnValues = [];
   whereKeys = [];
@@ -38,7 +38,7 @@ class Update {
   getSql() {
     var columns = [];
     for (var column of this.columns) {
-      columns.push((column += "=?"));
+      columns.push((column += '=?'));
     }
     var sql = `
       UPDATE ${this.table}
@@ -47,11 +47,11 @@ class Update {
     if (this.whereKeys.length > 0) {
       var ws = [];
       for (var where of this.whereKeys) {
-        ws.push((where += "=?"));
+        ws.push((where += '=?'));
       }
-      sql += "WHERE " + ws.join(" AND ");
+      sql += 'WHERE ' + ws.join(' AND ');
     }
-    return sql.replace(/\s+/g, " ").trim();
+    return sql.replace(/\s+/g, ' ').trim();
   }
 
   async execute() {

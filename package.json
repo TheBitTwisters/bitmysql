@@ -5,7 +5,8 @@
   "description": "Helper for mysql",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"No test specified\""
+    "test": "echo \"No test specified\"",
+    "pretty": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\""
   },
   "author": "michael01angelo@gmail.com",
   "license": "MIT",
@@ -16,7 +17,9 @@
   "dependencies": {
     "mysql2": "^3.2.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TheBitTwisters/bitmysql.git"

@@ -1,12 +1,12 @@
-import queries from '../queries';
+import queries from "../queries";
 
 const BaseModel = class BaseModel {
   static get tableName() {
-    return '';
+    return "";
   }
   static get sortBy() {
     return {
-      id: 'DESC',
+      id: "DESC",
     };
   }
 
@@ -17,7 +17,7 @@ const BaseModel = class BaseModel {
       try {
         var q = new queries.SearchQuery();
         await q
-          .select('*')
+          .select("*")
           .from(this.tableName)
           .where(whereParams)
           .like(likeParams)
@@ -34,7 +34,7 @@ const BaseModel = class BaseModel {
         reject({
           err: true,
           code: 503,
-          message: 'Internal(DB) server error',
+          message: "Internal(DB) server error",
         });
       }
     });
@@ -44,11 +44,7 @@ const BaseModel = class BaseModel {
     return new Promise(async (resolve, reject) => {
       try {
         var q = new queries.Query();
-        await q
-          .select('*')
-          .from(this.tableName)
-          .sortBy(this.sortBy)
-          .execute();
+        await q.select("*").from(this.tableName).sortBy(this.sortBy).execute();
         var results = q.getList();
         var list = [];
         for (var result of results) {
@@ -60,7 +56,7 @@ const BaseModel = class BaseModel {
         reject({
           err: true,
           code: 503,
-          message: 'Internal(DB) server error',
+          message: "Internal(DB) server error",
         });
       }
     });
@@ -70,11 +66,7 @@ const BaseModel = class BaseModel {
     return new Promise(async (resolve, reject) => {
       try {
         var q = new queries.Query();
-        await q
-          .select('*')
-          .from(this.tableName)
-          .where(params)
-          .execute();
+        await q.select("*").from(this.tableName).where(params).execute();
         var result = q.getOne();
         if (result) {
           resolve(new this(result));
@@ -85,7 +77,7 @@ const BaseModel = class BaseModel {
         reject({
           err: true,
           code: 503,
-          message: 'Internal(DB) server error',
+          message: "Internal(DB) server error",
         });
       }
     });
@@ -95,17 +87,14 @@ const BaseModel = class BaseModel {
     return new Promise(async (resolve, reject) => {
       try {
         var q = new queries.Delete();
-        await q
-          .deleteFrom(this.tableName)
-          .where(whereParams)
-          .execute();
+        await q.deleteFrom(this.tableName).where(whereParams).execute();
         resolve(q.result);
       } catch (err) {
         console.error(err);
         reject({
           err: true,
           code: 503,
-          message: 'Internal(DB) server error',
+          message: "Internal(DB) server error",
         });
       }
     });
@@ -154,7 +143,7 @@ const BaseModel = class BaseModel {
         reject({
           err: true,
           code: 503,
-          message: 'Internal(DB) server error',
+          message: "Internal(DB) server error",
         });
       }
     });

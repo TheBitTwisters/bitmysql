@@ -1,12 +1,11 @@
-import Queries from './queries';
-import Models from './models';
+import Queries from "./queries";
+import Models from "./models";
 
-export {
-  BaseModel: Models.BaseModel
-  Queries: Queries
-}
+const BaseModel = Models.BaseModel;
+
+export { BaseModel, Queries };
 
 export default {
   Queries,
-  Models
-}
+  Models,
+};

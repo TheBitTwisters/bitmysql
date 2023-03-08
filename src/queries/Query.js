@@ -1,10 +1,10 @@
-import run from './run'
-import BaseSelect from './BaseSelect'
+import run from "./run";
+import BaseSelect from "./BaseSelect";
 
 class Query extends BaseSelect {
   async execute() {
-    this.results = await run(this.getSql(), this.whereValues)
+    this.results = await run(this.getSql(), this.whereValues);
   }
 }
 
-export default Query
+export default Query;

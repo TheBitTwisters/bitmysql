@@ -1,4 +1,4 @@
-import { createPool } from 'mysql2/promise';
+import { createPool } from "mysql2/promise";
 
 const isDebugging = process.env.MYSQLHELPER_DEBUGGING || true;
 

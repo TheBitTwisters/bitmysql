@@ -1,4 +1,4 @@
-const { createPool } = require('mysql2/promise');
+const mysql = require('mysql');
 
 const isDebugging = process.env.MYSQLHELPER_DEBUGGING || true;
 
@@ -10,21 +10,24 @@ const my_config = {
   database: process.env.DATABASE_NAME,
 };
 
+// declare global connection for bitmysql
+global.bitmysql_conn;
+
 const run = async (sql, params) => {
-  var conn,
-    result = false;
+  var result = false;
   if (isDebugging) {
     console.log(`SQL: ${sql}`);
     console.log(`Params: ${params}`);
   }
   try {
-    conn = createPool(my_config);
-    const [rows] = await conn.query(sql, params);
+    if (!global.bitmysql_conn) {
+      global.bitmysql_conn = mysql.createPool(my_config);
+    }
+    const [rows] = await global.bitmysql_conn.query(sql, params);
     result = rows;
   } catch (err) {
     console.error(err);
   } finally {
-    if (conn != null) conn.end();
     return result;
   }
 };

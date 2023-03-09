@@ -13,9 +13,6 @@
     "mysql",
     "helper"
   ],
-  "dependencies": {
-    "mysql2": "^3.2.0"
-  },
   "devDependencies": {
     "prettier": "^2.8.4"
   },
@@ -26,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/TheBitTwisters/bitmysql/issues"
   },
-  "homepage": "https://github.com/TheBitTwisters/bitmysql#readme"
+  "homepage": "https://github.com/TheBitTwisters/bitmysql#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
 }

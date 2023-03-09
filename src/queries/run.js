@@ -23,8 +23,13 @@ const run = async (sql, params) => {
     if (!global.bitmysql_conn) {
       global.bitmysql_conn = mysql.createPool(my_config);
     }
-    const [rows] = await global.bitmysql_conn.query(sql, params);
-    result = rows;
+    await global.bitmysql_conn.query(
+      sql,
+      params,
+      function (err, data, fields) {
+        result = data;
+      }
+    );
   } catch (err) {
     console.error(err);
   } finally {

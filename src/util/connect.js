@@ -22,6 +22,12 @@ const connect = (params) => {
     global.bitmysql_conn = createPool(config);
     global.bitmysql_config = config;
   }
+  return new Promise((resolve, reject) => {
+    global.bitmysql_conn.getConnection(function (err, conn) {
+      if (err) resolve(false);
+      resolve(true);
+    });
+  });
 };
 
 module.exports = connect;

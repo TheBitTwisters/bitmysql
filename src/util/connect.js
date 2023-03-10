@@ -10,7 +10,7 @@ global.bitmysql_config = {
   database: process.env.DATABASE_NAME || 'bitmysql',
 };
 
-const connect = (params) => {
+const connect = (params = {}) => {
   let config = {
     host: params.host || global.bitmysql_config.host,
     port: params.port || global.bitmysql_config.port,

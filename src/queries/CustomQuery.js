@@ -1,4 +1,4 @@
-const run = require('./run');
+const run = require('../util/run');
 const BaseSelect = require('./BaseSelect');
 
 class CustomQuery extends BaseSelect {

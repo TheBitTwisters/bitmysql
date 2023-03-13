@@ -1,5 +1,5 @@
 // declare global connection for bitmysql
-const { createPool } = require('mysql2/promise');
+const mysql = require('mysql2/promise');
 
 global.bitmysql_conn;
 global.bitmysql_config = {
@@ -8,10 +8,12 @@ global.bitmysql_config = {
   user: process.env.DATABASE_USER || 'root',
   password: process.env.DATABASE_PASS || '',
   database: process.env.DATABASE_NAME || 'bitmysql',
+  connectionLimit: 100,
+  idleTimeout: 5000,
 };
 
-const connect = (params = {}) => {
-  let config = {
+const connect = function (params = {}) {
+  global.bitmysql_config = {
     host: params.host || global.bitmysql_config.host,
     port: params.port || global.bitmysql_config.port,
     user: params.user || global.bitmysql_config.user,
@@ -19,14 +21,15 @@ const connect = (params = {}) => {
     database: params.database || global.bitmysql_config.database,
   };
   if (!global.bitmysql_conn) {
-    global.bitmysql_conn = createPool(config);
-    global.bitmysql_config = config;
+    global.bitmysql_conn = mysql.createPool(global.bitmysql_config);
   }
-  return new Promise((resolve, reject) => {
-    global.bitmysql_conn.getConnection(function (err, conn) {
-      if (err) resolve(false);
+  return new Promise(async (resolve, reject) => {
+    try {
+      await global.bitmysql_conn.getConnection();
       resolve(true);
-    });
+    } catch (e) {
+      resolve(false);
+    }
   });
 };
 

@@ -1,4 +1,5 @@
 const queries = require('../queries');
+const errors = require('../utils/errors');
 
 const BaseModel = class BaseModel {
   static get tableName() {
@@ -30,12 +31,7 @@ const BaseModel = class BaseModel {
         }
         resolve(list);
       } catch (err) {
-        console.error(err);
-        reject({
-          err: true,
-          code: 503,
-          message: 'Internal(DB) server error',
-        });
+        reject(new errors.DbSearchError(err));
       }
     });
   }
@@ -56,12 +52,7 @@ const BaseModel = class BaseModel {
         }
         resolve(list);
       } catch (err) {
-        console.error(err);
-        reject({
-          err: true,
-          code: 503,
-          message: 'Internal(DB) server error',
-        });
+        reject(new errors.DbSelectError(err));
       }
     });
   }
@@ -81,12 +72,7 @@ const BaseModel = class BaseModel {
         }
         resolve(false);
       } catch (err) {
-        console.error(err);
-        reject({
-          err: true,
-          code: 503,
-          message: 'Internal(DB) server error',
-        });
+        reject(new errors.DbSelectError(err));
       }
     });
   }
@@ -101,12 +87,7 @@ const BaseModel = class BaseModel {
           .execute();
         resolve(q.result);
       } catch (err) {
-        console.error(err);
-        reject({
-          err: true,
-          code: 503,
-          message: 'Internal(DB) server error',
-        });
+        reject(new errors.DbDeleteError(err));
       }
     });
   }
@@ -150,12 +131,11 @@ const BaseModel = class BaseModel {
         }
         resolve(false);
       } catch (err) {
-        console.error(err);
-        reject({
-          err: true,
-          code: 503,
-          message: 'Internal(DB) server error',
-        });
+        if (this.id > 0) {
+          reject(new errors.DbUpdateError(err));
+        } else {
+          reject(new errors.DbInsertError(err));
+        }
       }
     });
   }

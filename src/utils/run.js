@@ -1,4 +1,5 @@
 const connect = require('./connect');
+const { DbError } = require('./errors');
 
 const isDebugging = process.env.MYSQLHELPER_DEBUGGING || true;
 
@@ -13,7 +14,7 @@ const run = async (sql, params) => {
     const [rows] = await global.bitmysql_conn.query(sql, params);
     result = rows;
   } catch (err) {
-    console.error(err);
+    new DbError(err);
   } finally {
     return result;
   }

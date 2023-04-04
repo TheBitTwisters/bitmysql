@@ -1,4 +1,4 @@
-const run = require('../util/run');
+const run = require('../utils/run');
 
 class Update {
   table = '';

@@ -9,15 +9,10 @@ const run = async (sql, params) => {
     console.log(`SQL: ${sql}`);
     console.log(`Params: ${params}`);
   }
-  try {
-    connect();
-    const [rows] = await global.bitmysql_conn.query(sql, params);
-    result = rows;
-  } catch (err) {
-    throw new DbError(err);
-  } finally {
-    return result;
-  }
+  connect();
+  const [rows] = await global.bitmysql_conn.query(sql, params);
+  result = rows;
+  return result;
 };
 
 module.exports = run;

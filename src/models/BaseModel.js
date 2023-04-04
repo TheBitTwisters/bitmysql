@@ -136,6 +136,7 @@ const BaseModel = class BaseModel {
         } else {
           reject(new errors.DbInsertError(err));
         }
+        reject(false);
       }
     });
   }

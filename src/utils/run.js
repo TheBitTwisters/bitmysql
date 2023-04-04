@@ -14,7 +14,7 @@ const run = async (sql, params) => {
     const [rows] = await global.bitmysql_conn.query(sql, params);
     result = rows;
   } catch (err) {
-    new DbError(err);
+    throw new DbError(err);
   } finally {
     return result;
   }

@@ -1,6 +1,6 @@
 class DbError extends Error {
   constructor(error) {
-    super(error.message || 'Unidentified database error');
+    super(error || 'Unidentified database error');
 
     this.data = { error };
     this.statusCode = error.statusCode || 500;

@@ -1,3 +1,4 @@
+const util = require('util');
 const connect = require('./connect');
 const { DbError } = require('./errors');
 
@@ -10,9 +11,10 @@ const run = async (sql, params) => {
     console.log(`Params: ${params}`);
   }
   connect();
-  var conn = await global.bitmysql_pool.getConnection();
-  const [rows] = await conn.query(sql, params);
-  conn.release();
+  const query = util
+    .promisify(global.bitmysql_conn.query)
+    .bind(global.bitmysql_conn);
+  const rows = await query(sql, params);
   result = rows;
   return result;
 };

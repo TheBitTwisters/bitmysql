@@ -1,7 +1,8 @@
-// declare global connection for bitmysql
 const mysql = require('mysql2/promise');
+const run = require('./run');
 
 global.bitmysql_conn;
+global.bitmysql_timezone = process.env.DATABASE_TIMEZONE || '+08:00';
 global.bitmysql_config = {
   host: process.env.DATABASE_HOST || 'localhost',
   port: process.env.DATABASE_PORT || 3306,
@@ -25,7 +26,9 @@ const connect = function (params = {}) {
   }
   return new Promise(async (resolve, reject) => {
     try {
-      await global.bitmysql_conn.getConnection();
+      let params = [];
+      params.push(global.bitmysql_timezone);
+      await run('SET time_zone = ?', params);
       resolve(true);
     } catch (e) {
       resolve(false);

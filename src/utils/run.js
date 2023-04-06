@@ -1,7 +1,7 @@
 const connect = require('./connect');
 const { DbError } = require('./errors');
 
-const isDebugging = process.env.MYSQLHELPER_DEBUGGING || true;
+const isDebugging = process.env.BITMYSQL_DEBUGGING || true;
 
 const run = async (sql, params) => {
   var result = false;

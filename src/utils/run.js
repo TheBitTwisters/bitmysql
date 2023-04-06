@@ -10,7 +10,9 @@ const run = async (sql, params) => {
     console.log(`Params: ${params}`);
   }
   connect();
-  const [rows] = await global.bitmysql_conn.query(sql, params);
+  var conn = await global.bitmysql_pool.getConnection();
+  const [rows] = await conn.query(sql, params);
+  conn.release();
   result = rows;
   return result;
 };

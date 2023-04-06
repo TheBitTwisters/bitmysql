@@ -115,6 +115,14 @@ const BaseModel = class BaseModel {
               .where({ id: this.id })
               .execute();
             if (u.result) {
+              if (this.hasOwnProperty('updated_at')) {
+                var q = new queries.CustomQuery();
+                await q
+                  .setSql(
+                    `UPDATE ${this.constructor.tableName} SET updated_at = now() WHERE id = ${this.id}`
+                  )
+                  .execute();
+              }
               resolve(true);
             }
           } else {

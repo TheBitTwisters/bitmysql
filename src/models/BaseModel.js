@@ -13,6 +13,14 @@ const BaseModel = class BaseModel {
 
   id = 0; // int
 
+  static newFromDb(param) {
+    var newThis = new this(param);
+    for (let key in Object.keys(this)) {
+      newThis[key] = param.key;
+    }
+    return newThis
+  }
+
   static search(whereParams, likeParams) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -27,7 +35,7 @@ const BaseModel = class BaseModel {
         var results = q.getList();
         var list = [];
         for (var result of results) {
-          list.push(new this(result));
+          list.push(this.newFromDb(result));
         }
         resolve(list);
       } catch (err) {
@@ -48,7 +56,7 @@ const BaseModel = class BaseModel {
         var results = q.getList();
         var list = [];
         for (var result of results) {
-          list.push(new this(result));
+          list.push(this.newFromDb(result));
         }
         resolve(list);
       } catch (err) {
@@ -68,7 +76,7 @@ const BaseModel = class BaseModel {
           .execute();
         var result = q.getOne();
         if (result) {
-          resolve(new this(result));
+          resolve(this.newFromDb(result));
         }
         resolve(false);
       } catch (err) {

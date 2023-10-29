@@ -18,7 +18,7 @@ const BaseModel = class BaseModel {
     for (let key in Object.keys(this)) {
       newThis[key] = param.key;
     }
-    return newThis
+    return newThis;
   }
 
   static search(whereParams, likeParams) {
@@ -163,7 +163,7 @@ const BaseModel = class BaseModel {
   async getUpdatedData() {
     if (this.id && this.id > 0) {
       var newData = {};
-      var oldThis = await BaseModel.get({ id: this.id }));
+      var oldThis = await BaseModel.get({ id: this.id });
       for (var key in Object.keys(this)) {
         if (this[key] != oldThis[key]) {
           newData[key] = this[key];

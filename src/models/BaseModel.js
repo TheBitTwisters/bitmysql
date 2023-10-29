@@ -113,7 +113,7 @@ const BaseModel = class BaseModel {
   save() {
     return new Promise(async (resolve, reject) => {
       try {
-        var jsonData = this.getUpdatedData();
+        var jsonData = await this.getUpdatedData();
         if (Object.keys(jsonData).length > 0) {
           if (this.id > 0) {
             var u = new queries.Update();
@@ -160,7 +160,7 @@ const BaseModel = class BaseModel {
   toJsonData() {
     return {};
   }
-  getUpdatedData() {
+  async getUpdatedData() {
     if (this.id && this.id > 0) {
       var newData = {};
       var oldThis = await BaseModel.get({ id: this.id }));

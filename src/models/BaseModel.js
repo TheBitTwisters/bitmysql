@@ -113,7 +113,7 @@ const BaseModel = class BaseModel {
   save() {
     return new Promise(async (resolve, reject) => {
       try {
-        var jsonData = await this.getUpdatedData();
+        let jsonData = await this.getUpdatedData();
         if (Object.keys(jsonData).length > 0) {
           if (this.id > 0) {
             var u = new queries.Update();
@@ -162,10 +162,10 @@ const BaseModel = class BaseModel {
   }
   async getUpdatedData() {
     if (this.id && this.id > 0) {
-      var newData = {};
-      var oldThis = await BaseModel.get({ id: this.id });
-      for (var key in Object.keys(this)) {
-        if (this[key] != oldThis[key]) {
+      let newData = {};
+      let oldThis = await this.constructor.get({ id: this.id });
+      for (let key of Object.keys(this)) {
+        if (this[key] && this[key] != oldThis[key]) {
           newData[key] = this[key];
         }
       }

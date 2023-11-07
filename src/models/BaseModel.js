@@ -105,7 +105,7 @@ const BaseModel = class BaseModel {
       try {
         var u = new queries.Update();
         await u
-          .update(this.constructor.tableName)
+          .update(this.tableName)
           .set(columnData ?? { active: 0 })
           .where({ id: this.id })
           .execute();

@@ -107,7 +107,7 @@ const BaseModel = class BaseModel {
         await u
           .update(this.tableName)
           .set(columnData ?? { active: 0 })
-          .where({ id: this.id })
+          .where(whereParams)
           .execute();
         resolve(u.result);
       } catch (err) {

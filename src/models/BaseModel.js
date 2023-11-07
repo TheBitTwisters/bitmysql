@@ -100,6 +100,22 @@ const BaseModel = class BaseModel {
     });
   }
 
+  static softDelete(whereParams, columnData = null) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var u = new queries.Update();
+        await u
+          .update(this.constructor.tableName)
+          .set(columnData ?? { active: 0 })
+          .where({ id: this.id })
+          .execute();
+        resolve(u.result);
+      } catch (err) {
+        reject(new errors.DbUpdateError(err));
+      }
+    });
+  }
+
   constructor(param = {}) {
     this.id = param.id || 0;
   }

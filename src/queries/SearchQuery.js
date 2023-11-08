@@ -28,15 +28,24 @@ class SearchQuery extends BaseSelect {
       }
       this.where(params);
     }
-    if (this.whereKeys.length > 0 || this.likeKeys.length > 0) {
-      var ws = [];
+    var ws = [];
+    if (this.whereKeys.length > 0) {
       for (var where of this.whereKeys) {
         ws.push((where += '=?'));
       }
-      for (var like of this.likeKeys) {
-        ws.push(like + " LIKE CONCAT('%', ?,  '%')");
-      }
       sql += 'WHERE ' + ws.join(' AND ');
+    }
+    var ls = [];
+    if (this.likeKeys.length > 0) {
+      for (var like of this.likeKeys) {
+        ls.push(like + " LIKE CONCAT('%', ?,  '%')");
+      }
+      if (ws.length == 0) {
+        sql += 'WHERE ';
+      } else {
+        sql += ' OR ';
+      }
+      sql += ls.join(' OR ');
     }
     return sql;
   }

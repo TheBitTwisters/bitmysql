@@ -38,14 +38,13 @@ class SearchQuery extends BaseSelect {
     var ls = [];
     if (this.likeKeys.length > 0) {
       for (var like of this.likeKeys) {
-        ls.push(like + " LIKE CONCAT('%', ?,  '%')");
+        ls.push(like + ' REGEXP ?');
       }
       if (ws.length == 0) {
-        sql += 'WHERE ';
+        sql += 'WHERE ' + ls.join(' OR ');
       } else {
-        sql += ' OR ';
+        sql += ' AND (' + ls.join(' OR ') + ')';
       }
-      sql += ls.join(' OR ');
     }
     return sql;
   }

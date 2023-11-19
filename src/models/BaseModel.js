@@ -34,7 +34,6 @@ const BaseModel = class BaseModel {
   static count(whereParams, likeParams) {
     return new Promise(async (resolve, reject) => {
       try {
-        var paging = this.paginateBy(page);
         var q = new queries.SearchQuery();
         await q
           .select('COUNT(*)')
@@ -42,9 +41,10 @@ const BaseModel = class BaseModel {
           .where(whereParams)
           .like(likeParams)
           .execute();
-        var count = q.getOne(0);
+        var count = q.getSingleValue(0);
         resolve(count);
       } catch (err) {
+        console.log(err);
         reject(new errors.DbSearchError(err));
       }
     });

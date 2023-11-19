@@ -15,8 +15,8 @@ class BaseSelect {
   getSingleValue(def = false) {
     if (Array.isArray(this.results)) {
       if (this.results.length > 0) {
-        for (let first of this.results[0]) {
-          return first;
+        for (let key in this.results[0]) {
+          return this.results[0][key];
         }
       }
     }

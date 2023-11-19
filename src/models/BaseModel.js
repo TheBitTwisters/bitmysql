@@ -10,8 +10,18 @@ const BaseModel = class BaseModel {
       id: 'DESC',
     };
   }
+  static get limit() {
+    return 10;
+  }
 
   id = 0; // int
+
+  static paginateBy(page = 1) {
+    return {
+      limit: this.limit,
+      offset: page * this.limit - 1,
+    };
+  }
 
   static newFromDb(param) {
     var newThis = new this(param);
@@ -21,16 +31,37 @@ const BaseModel = class BaseModel {
     return newThis;
   }
 
-  static search(whereParams, likeParams) {
+  static count(whereParams, likeParams) {
     return new Promise(async (resolve, reject) => {
       try {
+        var paging = this.paginateBy(page);
+        var q = new queries.SearchQuery();
+        await q
+          .select('COUNT(*)')
+          .from(this.tableName)
+          .where(whereParams)
+          .like(likeParams)
+          .execute();
+        var count = q.getOne(0);
+        resolve(count);
+      } catch (err) {
+        reject(new errors.DbSearchError(err));
+      }
+    });
+  }
+  static search(whereParams, likeParams, sortBy = null, page = 1) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var paging = this.paginateBy(page);
         var q = new queries.SearchQuery();
         await q
           .select('*')
           .from(this.tableName)
           .where(whereParams)
           .like(likeParams)
-          .sortBy(this.sortBy)
+          .sortBy(sortBy || this.sortBy)
+          .limit(paging.limit)
+          .offset(paging.limit > -1 ? paging.offset : -1)
           .execute();
         var results = q.getList();
         var list = [];

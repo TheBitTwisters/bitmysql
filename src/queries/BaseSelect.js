@@ -2,7 +2,7 @@
  *
  */
 class BaseSelect {
-  table = "";
+  table = '';
   fields = [];
   whereKeys = [];
   whereValues = [];
@@ -12,6 +12,16 @@ class BaseSelect {
   offsetValue = -1;
   results = null;
 
+  getSingleValue(def = false) {
+    if (Array.isArray(this.results)) {
+      if (this.results.length > 0) {
+        for (let first of this.results[0]) {
+          return first;
+        }
+      }
+    }
+    return def;
+  }
   getOne(def = false) {
     if (Array.isArray(this.results)) {
       if (this.results.length > 0) {
@@ -90,42 +100,48 @@ class BaseSelect {
     return ` FROM ${this.table} `;
   }
   getSqlWhere() {
-    var sql = "";
+    var sql = '';
     if (this.whereKeys.length > 0) {
       var ws = [];
       for (var where of this.whereKeys) {
-        ws.push(where + "=?");
+        ws.push(where + '=?');
       }
-      sql += " WHERE " + ws.join(" AND ");
+      sql += ' WHERE ' + ws.join(' AND ');
     }
     return sql;
   }
   getSqlGroupBy() {
-    var sql = "";
+    var sql = '';
     if (this.groupKeys.length > 0) {
-      sql += " GROUP BY " + this.groupKeys.join(" , ");
+      sql += ' GROUP BY ' + this.groupKeys.join(' , ');
     }
     return sql;
   }
   getSqlSortBy() {
-    var sql = "";
+    var sql = '';
     var sorts = [];
     for (var sortKey in this.sortKeys) {
-      sorts.push(`\`${sortKey}\`` + " " + this.sortKeys[sortKey]);
+      sorts.push(`\`${sortKey}\`` + ' ' + this.sortKeys[sortKey]);
     }
     if (sorts.length > 0) {
-      sql += " ORDER BY " + sorts.join(" , ");
+      sql += ' ORDER BY ' + sorts.join(' , ');
     }
     return sql;
   }
   getSql() {
-    var sql = "";
+    var sql = '';
     sql += this.getSqlSelect();
     sql += this.getSqlFrom();
     sql += this.getSqlWhere();
     sql += this.getSqlGroupBy();
     sql += this.getSqlSortBy();
-    return sql.replace(/\s+/g, " ").trim();
+    if (this.limitValue > -1) {
+      sql += ` LIMIT ${parseInt(this.limitValue)}`;
+    }
+    if (this.offsetValue > -1) {
+      sql += ` OFFSET ${parseInt(this.offsetValue)}`;
+    }
+    return sql.replace(/\s+/g, ' ').trim();
   }
 }
 

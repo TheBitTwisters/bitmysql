@@ -19,7 +19,7 @@ const BaseModel = class BaseModel {
   static paginateBy(page = 1) {
     return {
       limit: this.limit,
-      offset: page * this.limit - 1,
+      offset: (page - 1) * this.limit,
     };
   }
 

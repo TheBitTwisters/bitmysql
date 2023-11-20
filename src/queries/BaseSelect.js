@@ -128,6 +128,18 @@ class BaseSelect {
     }
     return sql;
   }
+  getSqlLimitOffset() {
+    if (this.limitValue > -1) {
+      if (this.offsetValue > -1) {
+        return `
+          LIMIT ${parseInt(this.limitValue)}
+          OFFSET ${parseInt(this.offsetValue)}
+        `;
+      }
+      return ` LIMIT ${parseInt(this.limitValue)}`;
+    }
+    return '';
+  }
   getSql() {
     var sql = '';
     sql += this.getSqlSelect();
@@ -135,12 +147,7 @@ class BaseSelect {
     sql += this.getSqlWhere();
     sql += this.getSqlGroupBy();
     sql += this.getSqlSortBy();
-    if (this.limitValue > -1) {
-      sql += ` LIMIT ${parseInt(this.limitValue)}`;
-    }
-    if (this.offsetValue > -1) {
-      sql += ` OFFSET ${parseInt(this.offsetValue)}`;
-    }
+    sql += this.getSqlLimitOffset();
     return sql.replace(/\s+/g, ' ').trim();
   }
 }

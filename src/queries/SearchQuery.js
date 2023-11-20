@@ -55,8 +55,6 @@ class SearchQuery extends BaseSelect {
     sql += this.getSqlWhereLike();
     sql += this.getSqlGroupBy();
     sql += this.getSqlSortBy();
-    console.log(this.limitValue);
-    console.log(this.limitValue > -1);
     sql += this.getSqlLimitOffset();
     return sql.replace(/\s+/g, ' ').trim();
   }
